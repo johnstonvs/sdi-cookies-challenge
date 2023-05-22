@@ -11,12 +11,16 @@ server.use(cookieSession({
 }))
 
 server.get('/', (req, res) => {
-  res.send('Go to login to set name');
+  res.send('Go to /login?name="NAME" to set name');
 })
 
 server.get('/login', (req, res) => {
-  let name = 'Jacob';
-  res.cookie('name', name).send(`Name set to ${name}`);
+  if (req.query.name) {
+    let name = req.query.name;
+    res.cookie('name', name).send(`Name set to ${name}`);
+  } else {
+    res.send('Go to /login?name="NAME" to set name...')
+  }
 })
 
 server.get('/hello', (req, res) => {
